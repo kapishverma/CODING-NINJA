@@ -1,0 +1,96 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+class LinkedListNode<T> {
+    T data;
+    LinkedListNode<T> next;
+    
+    public LinkedListNode(T data) {
+        this.data = data;
+    }
+}
+
+public class Runner {
+    
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    
+    public static LinkedListNode<Integer> takeInput() throws IOException {
+        LinkedListNode<Integer> head = null, tail = null;
+
+        String[] datas = br.readLine().trim().split("\\s");
+
+        int i = 0;
+        while(i < datas.length && !datas[i].equals("-1")) {
+            int data = Integer.parseInt(datas[i]);
+            LinkedListNode<Integer> newNode = new LinkedListNode<Integer>(data);
+            if(head == null) {
+                head = newNode;
+                tail = newNode;
+            }
+            else {
+                tail.next = newNode;
+                tail = newNode;
+            }
+            i += 1;
+        }
+
+        return head;
+    }
+    
+    public static void print(LinkedListNode<Integer> head) {
+        while(head != null) {
+            System.out.print(head.data + " ");
+            head = head.next;
+        }
+        
+        System.out.println();
+    }
+    
+    public static void main(String[] args) throws NumberFormatException, IOException {
+        
+        
+           
+        LinkedListNode<Integer> head1 = takeInput();
+        String[] strNums = br.readLine().trim().split(" ");
+        int a = Integer.parseInt(strNums[0]);
+        int b = Integer.parseInt(strNums[1]);
+        LinkedListNode<Integer> head2 = takeInput();
+
+        LinkedListNode<Integer> newHead = Solution.mergeInBetween(head1, a, b, head2);
+        print(newHead);
+        
+
+
+    }
+}
+//__________________________________________________________________________________________________
+
+public class Solution {
+
+    public static LinkedListNode<Integer> mergeInBetween(LinkedListNode<Integer> list1, int a, int b, LinkedListNode<Integer> list2) {
+        // Write your code here
+        LinkedListNode<Integer> OP=list1;
+        LinkedListNode<Integer> temp ;
+        // int j=0;
+        for(int i = 1; i<=a ; i++){
+
+            if(i<a){
+               OP=OP.next;
+            }
+            if(i==a){
+                        temp = OP.next;
+                        OP.next=list2;
+               while(i<b+1){
+                    temp=temp.next;
+                    i++;
+                }
+                while(OP.next!=null){
+                    OP=OP.next;
+                }
+                OP.next=temp;
+             }
+        }
+        return list1;
+    }
+}
