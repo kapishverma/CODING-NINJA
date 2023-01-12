@@ -1,0 +1,40 @@
+import java.util.Scanner;
+public class Solution {
+
+	public static void main(String[] args) {
+
+	Scanner s= new Scanner(System.in);
+	int a = s.nextInt();
+	int n = s.nextInt();
+    int mod = 1337;
+    a = a%mod;
+	long[] arr = new long[10];
+
+	int element=s.nextInt();
+
+    long output = fastPower(a,element,mod);
+	for(int i =1; i<n ; i++){
+		element = s.nextInt();
+		if(arr[element]==0){
+        arr[element] = fastPower(a,element,mod);
+		output = (fastPower(output,10,mod) * arr[element])%mod;
+		}else{
+		output = (fastPower(output,10,mod) * arr[element])%mod;
+		}
+	}
+    System.out.print(output);
+}
+public static long fastPower(long a, long b , long mod){
+
+long output =1;
+while(b>0){
+	if( (b&1) != 0){ // bit & operation
+		output = (output * a)%mod;
+	   }
+	a = (a * a )%mod;
+	b = b>>1; //bit left shift operation same as divide by 2;
+   }
+   return output;
+}
+
+}
